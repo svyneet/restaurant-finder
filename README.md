@@ -1,4 +1,4 @@
-# Berlin Restaurant Concierge
+# Berlin Restaurant scout
 
 A multi-agent, tool-using LLM system that answers questions about restaurants in Berlin, grounded in real scraped Google Maps review data. Built to demonstrate **retrieval-augmented generation (RAG) + agentic tool use + citation verification**, not just "call an LLM and hope."
 

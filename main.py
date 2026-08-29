@@ -1,4 +1,4 @@
-"""CLI chat loop for the Berlin restaurant multi-agent concierge.
+"""CLI chat loop for the Berlin restaurant multi-agent scout.
 
 Usage:
     python main.py
@@ -31,7 +31,7 @@ def _print_report(result) -> None:
 
 async def main() -> None:
     configure_observability()
-    print("Berlin Restaurant Concierge (multi-agent, pydantic-ai). Ctrl+C to quit.\n")
+    print("Berlin Restaurant scout (multi-agent, pydantic-ai). Ctrl+C to quit.\n")
     coordinator = Coordinator()
     while True:
         try:
