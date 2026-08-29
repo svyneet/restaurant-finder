@@ -1,0 +1,19 @@
+[tool.poetry]
+# Non-package mode: this is an application run via `python main.py` /
+# `uvicorn backend.main:app` (top-level `src`/`backend` imports), not an
+# installable/publishable library, so Poetry only manages dependencies.
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+pydantic-ai-slim = { version = "^2.13.0", extras = ["anthropic", "huggingface"] }
+langgraph = "^1.2.10"
+python-dotenv = "^1.2.2"
+fastapi = "^0.141.1"
+uvicorn = { version = "^0.51.0", extras = ["standard"] }
+truststore = "^0.10.4"
+llama-index = "^0.14.23"
+llama-index-embeddings-huggingface = "^0.7.0"
+llama-index-retrievers-bm25 = "^0.7.1"
+transformers = "^5.15.0"
+mlflow = "^3.15.1"

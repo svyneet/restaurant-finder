@@ -1,0 +1,4 @@
+[virtualenvs]
+# Use the project-local .venv (already referenced throughout the docs) instead
+# of Poetry's global cache dir.
+in-project = true
