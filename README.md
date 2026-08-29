@@ -29,7 +29,7 @@ stages) is implemented as a [LangGraph](https://langchain-ai.github.io/langgraph
 `StateGraph` in `orchestrator.py`; pydantic-ai still owns the actual LLM/tool-calling
 loop, LangGraph only orchestrates which stage runs next.
 
-- **Dataset**: scraped Google Maps reviews (`data/*.json`), merged and deduplicated automatically. Currently ~26 Berlin-area restaurants.
+- **Dataset**: scraped Google Maps reviews (`data/*.json`), merged and deduplicated automatically. Currently ~420 Berlin restaurants across four districts (Mitte, Kreuzberg, Neukölln, Charlottenburg-Wilmersdorf).
 - **Retrieval**: local semantic vector search (`src/rag/index.py`) — reviews are embedded with a local HuggingFace sentence-transformer (`BAAI/bge-small-en-v1.5`) and indexed with [llama_index](https://docs.llamaindex.ai/)'s `VectorStoreIndex`; the index is persisted to `data/.index_cache` and only rebuilt when the corpus changes. No external embeddings API, no cost.
 - **Tools** (`src/agents/tools.py`), registered in-process on the Researcher agent:
   - reviews: `list_places`, `search_reviews` (vector search via `src/rag/index.py`), `get_place_stats` (deterministic aspect/sentiment via keyword counting), `verify_quote` (deterministic NLI entailment check)
@@ -63,8 +63,8 @@ Set `LLM_PROVIDER` in `.env`:
 
 ## Known limitations
 
-- The dataset only covers ~26 restaurants — it will (correctly) refuse to answer about cuisines it has no data for (e.g. sushi, ramen).
+- The dataset covers ~420 restaurants across four Berlin districts (Mitte, Kreuzberg, Neukölln, Charlottenburg-Wilmersdorf) — it will (correctly) refuse to answer about restaurants or neighborhoods outside that coverage rather than guessing from outside knowledge.
 - Local models (especially smaller ones) sometimes skip tool calls entirely and answer from parametric knowledge instead — the orchestrator forces a retry when this happens, but a model can still fail to comply. The verifier catches resulting hallucinated citations, but forcing retrieval isn't 100% guaranteed with weak tool-calling models.
-- Maps tools depend on free public services (Nominatim/Overpass/OSRM) which have usage limits and can occasionally be slow or unavailable — the tools report this explicitly rather than fabricating results.
+- Location info is dataset-only: `get_place_address` returns a restaurant's stored address, but there's no live geocoding, routing, or opening-hours integration — so distance and "open right now?" questions can't be answered.
 
 See [QUICKSTART.md](QUICKSTART.md) to get running.
